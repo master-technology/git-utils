@@ -6,5 +6,5 @@
 *~
 .node-version
 
-idea/
+.idea/
 package-lock.json
