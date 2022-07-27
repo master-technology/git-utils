@@ -1,7 +1,7 @@
 {
-  "name": "git-utils",
+  "name": "@master.technology/git-utils",
   "description": "A package for using Git repositories",
-  "version": "5.7.3",
+  "version": "5.8.0",
   "license": "MIT",
   "author": {
     "name": "Kevin Sawicki",
@@ -11,16 +11,20 @@
     {
       "name": "Garen J. Torikian",
       "email": "gjtorikian@gmail.com"
+    },
+    {
+      "name": "Nathanael Anderson",
+      "email": "nathan@master-technology.com"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/atom/git-utils.git"
+    "url": "https://github.com/master-technology/git-utils"
   },
   "bugs": {
-    "url": "https://github.com/atom/git-utils/issues"
+    "url": "https://github.com/master-technology/git-utils/issues"
   },
-  "homepage": "http://atom.github.io/git-utils",
+  "homepage": "https://github.com/master-technology/git-utils",
   "keywords": [
     "git",
     "libgit2",
@@ -29,15 +33,15 @@
   ],
   "main": "./src/git.js",
   "devDependencies": {
-    "standard": "^10.0.3",
     "jasmine-focused": "^1.0.7",
+    "standard": "^10.0.3",
     "temp": "~0.9.4",
     "underscore": "~1.12.0",
-    "wrench": "~1.4.4"
+    "wrench": "~1.4.4",
+    "fs-plus": "^3.1.1"
   },
   "dependencies": {
-    "nan": "^2.14.2",
-    "fs-plus": "^3.1.1"
+    "nan": "^2.14.2"
   },
   "scripts": {
     "lint": "standard src spec",

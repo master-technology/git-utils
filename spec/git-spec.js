@@ -5,7 +5,7 @@ const {exec} = require('child_process')
 const wrench = require('wrench')
 const temp = require('temp')
 const _ = require('underscore')
-const {it, fit, beforeEach} = require('./async-spec-helper-functions')
+const {it, beforeEach} = require('./async-spec-helper-functions')
 
 describe('git', () => {
   let repo
@@ -368,9 +368,10 @@ describe('git', () => {
 
       // in this test, we need to fake a commit and try to switch to a new branch
       it('does not check a branch out if the dirty tree interferes', () => {
+        repo.checkoutReference('refs/heads/getHeadOriginal')
         fs.writeFileSync(path.join(repo.getWorkingDirectory(), 'README.md'), 'great words', 'utf8')
         const gitCommandHandler = jasmine.createSpy('gitCommandHandler')
-        execCommands([`cd ${repoDirectory}`, 'git add .', "git commit -m 'comitting'"], gitCommandHandler)
+        execCommands([`cd ${repoDirectory}`, 'git add .', "git commit -m 'Committing'"], gitCommandHandler)
 
         waitsFor(() => gitCommandHandler.callCount === 1)
 

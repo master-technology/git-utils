@@ -5,3 +5,6 @@
 *.log
 *~
 .node-version
+
+idea/
+package-lock.json

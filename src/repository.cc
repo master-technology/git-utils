@@ -309,9 +309,12 @@ NAN_METHOD(Repository::GetConfigValue) {
   const char* configValue;
   if (git_config_get_string(
         &configValue, config, configKey.c_str()) == GIT_OK) {
+
+     info.GetReturnValue().Set(Nan::New<v8::String>(configValue)
+                                          .ToLocalChecked());
     git_config_free(config);
-    return info.GetReturnValue().Set(Nan::New<String>(configValue)
-                                      .ToLocalChecked());
+
+    return;
   } else {
     git_config_free(config);
     return info.GetReturnValue().Set(Nan::Null());

@@ -1,5 +1,5 @@
-const path = require('path')
-const fs = require('fs-plus')
+const path = require('node:path')
+const fs = require('node:fs')
 const {Repository} = require('../build/Release/git.node')
 
 const statusIndexNew = 1 << 0
@@ -313,7 +313,7 @@ function openRepository (repositoryPath, search) {
   if (process.platform === 'win32') repositoryPath = repositoryPath.replace(/\\/g, '/')
   const repository = new Repository(repositoryPath, search)
   if (repository.exists()) {
-    repository.caseInsensitiveFs = fs.isCaseInsensitive()
+    repository.caseInsensitiveFs = isCaseInsensitiveFileSystem()
     if (symlink) {
       const workingDirectory = repository.getWorkingDirectory()
       while (!isRootPath(repositoryPath)) {
@@ -353,4 +353,25 @@ exports.open = function (repositoryPath, search = true) {
   const repository = openRepository(repositoryPath, search)
   if (repository) openSubmodules(repository)
   return repository
+}
+
+
+/***
+ * Checks to see if the underlying FileSystem is Case-insensitive
+ *
+ * This specific routine was borrowed (& modified) from fs-plus (under MIT) to
+ * eliminate a dependency on a large chain of dependencies.
+ ***/
+let _isCaseInsensitive = null;
+function isCaseInsensitiveFileSystem() {
+  if (_isCaseInsensitive == null) {
+    const lowerCaseStat = fs.statSync(process.execPath.toLowerCase(), {throwIfNoEntry: false});
+    const upperCaseStat = fs.statSync(process.execPath.toUpperCase(), {throwIfNoEntry: false});
+    if (lowerCaseStat && upperCaseStat) {
+      _isCaseInsensitive = (lowerCaseStat.dev === upperCaseStat.dev) && (lowerCaseStat.ino === upperCaseStat.ino);
+    } else {
+      _isCaseInsensitive = false;
+    }
+  }
+  return _isCaseInsensitive;
 }
